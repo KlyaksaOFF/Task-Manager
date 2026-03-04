@@ -39,7 +39,7 @@ def registration_user(request):
 
         try:
             User.objects.create_user(**data)
-            messages.success(request, 'Registration successful!')
+            messages.success(request, 'Пользователь успешно зарегистрирован')
             return redirect('login')
 
         except Exception as e:
