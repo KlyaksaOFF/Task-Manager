@@ -9,14 +9,17 @@ from task_manager.models import Status
 class StatusCRUDTest(TestCase):
 
     def setUp(self):
-        # Создаем пользователя и логинимся (как в вашей реализации)
-        self.user = User.objects.create_user(username='testuser', password='testpass123')
+        # Создаем пользователя и логинимся
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
         self.client.login(username='testuser', password='testpass123')
 
         # Создаем статус для тестов
         self.status = Status.objects.create(name='Test Status')
 
-        # URLs (как в вашем urls.py)
+        # URLs
         self.statuses_url = reverse('statuses')
         self.create_url = reverse('status_create')
         self.update_url = reverse('status_update', args=[self.status.pk])
@@ -75,7 +78,9 @@ class StatusCRUDTest(TestCase):
         self.assertEqual(self.status.name, 'Updated Status')
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('обновлен' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Статус успешно изменен' in str(m) for m in messages)
+        )
 
     def test_update_status_post_empty(self):
         """Тест обновления статуса с пустым именем"""
@@ -110,7 +115,12 @@ class StatusCRUDTest(TestCase):
         self.client.logout()
 
         # Проверяем все URL
-        urls = [self.statuses_url, self.create_url, self.update_url, self.delete_url]
+        urls = [
+            self.statuses_url,
+            self.create_url,
+            self.update_url,
+            self.delete_url
+        ]
         for url in urls:
             response = self.client.get(url)
             self.assertRedirects(response, f'/login/?next={url}')

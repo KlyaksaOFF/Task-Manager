@@ -10,14 +10,17 @@ class LabelsCRUDTest(TestCase):
     """Тесты для CRUD операций с метками"""
 
     def setUp(self):
-        # Создаем пользователя и логинимся (как в вашей реализации)
-        self.user = User.objects.create_user(username='testuser', password='testpass123')
+        # Создаем пользователя и логинимся
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
         self.client.login(username='testuser', password='testpass123')
 
         # Создаем метку для тестов
         self.label = Labels.objects.create(name='Test Label')
 
-        # URLs (как в вашем urls.py)
+        # URLs
         self.labels_url = reverse('labels')
         self.create_url = reverse('create_label')
         self.update_url = reverse('label_update', args=[self.label.pk])
@@ -47,7 +50,9 @@ class LabelsCRUDTest(TestCase):
         self.assertTrue(Labels.objects.filter(name='New Label').exists())
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('create' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Метка успешно создана' in str(m) for m in messages)
+        )
 
     def test_create_label_post_empty_name(self):
         """Тест создания метки с пустым именем (должно вернуть ошибку)"""
@@ -76,7 +81,9 @@ class LabelsCRUDTest(TestCase):
         self.assertEqual(self.label.name, 'Updated Label Name')
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('updated' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Метка успешно изменена' in str(m) for m in messages)
+        )
 
     def test_update_label_post_empty_name(self):
         """Тест обновления метки с пустым именем (должно вернуть ошибку)"""
@@ -85,7 +92,8 @@ class LabelsCRUDTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.label.refresh_from_db()
-        self.assertEqual(self.label.name, 'Test Label')  # Имя не должно измениться
+        # Имя не должно измениться
+        self.assertEqual(self.label.name, 'Test Label')
 
     # --- DELETE (удаление метки) ---
     def test_delete_label_get(self):
@@ -103,11 +111,13 @@ class LabelsCRUDTest(TestCase):
         self.assertFalse(Labels.objects.filter(pk=self.label.pk).exists())
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('remove' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Метка успешно удалена' in str(m) for m in messages)
+        )
 
     def test_delete_label_post_with_task_protected(self):
         """
-        Тест невозможности удалить метку, связанную с задачей (важное требование).
+        Тест невозможности удалить метку, связанную с задачей.
         Создаем задачу, привязываем к ней метку и пытаемся удалить метку.
         """
         # Создаем статус и задачу, привязываем нашу метку
@@ -128,15 +138,23 @@ class LabelsCRUDTest(TestCase):
         self.assertTemplateUsed(response, 'label/delete_label.html')
 
         messages = list(get_messages(response.wsgi_request))
-        # ИЗМЕНИТЬ под ваше реальное сообщение
-        self.assertTrue(any('Cannot delete label' in str(m) for m in messages))
+        # Проверяем сообщение об ошибке
+        self.assertTrue(
+            any('Невозможно удалить метку'
+                in str(m) for m in messages)
+        )
 
     # --- БЕЗ АВТОРИЗАЦИИ ---
     def test_access_without_login(self):
-        """Тест доступа к CRUD меткам без авторизации (должен редиректить на логин)"""
+        """Тест доступа к CRUD меткам без авторизации"""
         self.client.logout()
 
-        urls = [self.labels_url, self.create_url, self.update_url, self.delete_url]
+        urls = [
+            self.labels_url,
+            self.create_url,
+            self.update_url,
+            self.delete_url
+        ]
         for url in urls:
             response = self.client.get(url)
             self.assertRedirects(response, f'/login/?next={url}')

@@ -357,7 +357,7 @@ def test_rollbar(request):
     # Создаем тестовое исключение
     try:
         raise ValueError('This is a test exception for Rollbar')
-    except:
+    except Exception:
         rollbar.report_exc_info(request=request)
 
     messages.success(request, 'Test error sent to Rollbar!')

@@ -10,7 +10,10 @@ class TasksCRUDTest(TestCase):
 
     def setUp(self):
         # Создаем пользователя и логинимся
-        self.user = User.objects.create_user(username='testuser', password='testpass123')
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
         self.client.login(username='testuser', password='testpass123')
 
         # Создаем дополнительные данные
@@ -133,7 +136,10 @@ class TasksCRUDTest(TestCase):
         }
         response = self.client.post(self.update_url, data)
 
-        self.assertRedirects(response, reverse('task_detail', args=[self.task.pk]))
+        self.assertRedirects(
+            response,
+            reverse('task_detail', args=[self.task.pk])
+        )
 
         self.task.refresh_from_db()
         self.assertEqual(self.task.name, 'Updated Task')
@@ -176,24 +182,25 @@ class TasksCRUDTest(TestCase):
         self.assertFalse(Tasks.objects.filter(pk=self.task.pk).exists())
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('remove' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Задача успешно удалена' in str(m) for m in messages)
+        )
 
     def test_delete_task_by_non_author(self):
         """Тест удаления задачи не автором"""
         # Создаем другого пользователя
-        other_user = User.objects.create_user(username='other', password='otherpass')
+        User.objects.create_user(username='other', password='otherpass')
         self.client.login(username='other', password='otherpass')
 
-        response = self.client.post(self.delete_url)
+        self.client.post(self.delete_url)
 
         # Задача должна остаться
         self.assertTrue(Tasks.objects.filter(pk=self.task.pk).exists())
-        # Должно быть сообщение об ошибке (проверка зависит от вашей реализации)
 
     # PERMISSIONS - права доступа
     def test_update_task_by_non_author(self):
         """Тест обновления задачи не автором"""
-        other_user = User.objects.create_user(username='other', password='otherpass')
+        User.objects.create_user(username='other', password='otherpass')
         self.client.login(username='other', password='otherpass')
 
         data = {
@@ -203,13 +210,13 @@ class TasksCRUDTest(TestCase):
             'executor': '',
             'labels': []
         }
-        response = self.client.post(self.update_url, data)
+        self.client.post(self.update_url, data)
 
-        # Задача не должна измениться (зависит от вашей реализации)
+        # Задача не должна измениться
         self.task.refresh_from_db()
         self.assertEqual(self.task.name, 'Test Task')
 
-    # FILTER - фильтрация задач (если есть в tasks_list)
+    # FILTER - фильтрация задач
     def test_tasks_list_filter_by_status(self):
         """Тест фильтрации задач по статусу"""
         response = self.client.get(self.tasks_url, {'status': self.status.id})

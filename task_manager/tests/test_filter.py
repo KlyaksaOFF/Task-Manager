@@ -111,7 +111,6 @@ class TasksFilterTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         tasks = response.context['tasks']
-        # В вашей реализации фильтр по executor=user1
         # Должны быть task1 (executor=user1) и task3 (executor=user1)
         self.assertEqual(tasks.count(), 2)
         self.assertIn(self.task1, tasks)
@@ -187,7 +186,10 @@ class TasksFilterTest(TestCase):
         self.client.logout()
         response = self.client.get(self.tasks_url, {'status': self.status1.id})
         # Проверяем редирект с сохранением query параметров
-        expected_url = f'/login/?next={self.tasks_url}%3Fstatus%3D{self.status1.id}'
+        expected_url = (
+            f'/login/?next={self.tasks_url}'
+            f'%3Fstatus%3D{self.status1.id}'
+        )
         self.assertRedirects(response, expected_url)
 
 
@@ -195,7 +197,10 @@ class TasksFilterFormTest(TestCase):
     """Тесты для формы фильтрации в шаблоне"""
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='pass123')
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='pass123'
+        )
         self.client.login(username='testuser', password='pass123')
 
         # Создаем данные для фильтров
@@ -219,7 +224,7 @@ class TasksFilterFormTest(TestCase):
 
         # Проверяем наличие кнопки Show
         self.assertContains(response, 'type="submit"')
-        self.assertContains(response, 'Show')
+        self.assertContains(response, 'Показать')
 
     def test_filter_form_has_css_classes(self):
         """Тест что поля фильтрации имеют правильные CSS классы"""

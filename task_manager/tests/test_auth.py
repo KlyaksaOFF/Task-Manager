@@ -36,7 +36,10 @@ class UserRegistrationTest(TestCase):
 
         # Проверяем сообщение об успехе
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('Registration successful' in str(m) for m in messages))
+        self.assertTrue(
+            any('Пользователь успешно зарегистрирован'
+                in str(m) for m in messages)
+        )
 
     def test_registration_with_mismatched_passwords(self):
         """Тест регистрации с несовпадающими паролями"""
@@ -53,7 +56,9 @@ class UserRegistrationTest(TestCase):
 
         # Проверяем сообщение об ошибке
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("passwords don't match" in str(m).lower() for m in messages))
+        self.assertTrue(
+            any("passwords don't match" in str(m).lower() for m in messages)
+        )
 
     def test_registration_with_short_password(self):
         """Тест регистрации с коротким паролем (меньше 3 символов)"""
@@ -68,20 +73,24 @@ class UserRegistrationTest(TestCase):
         self.assertFalse(User.objects.filter(username='johndoe').exists())
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('password length must be more' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('password length must be more' in str(m).lower()
+                for m in messages)
+        )
 
     def test_user_count_not_increased_after_failed_registration(self):
+        """Тест что счетчик не увеличивается после неудачной регистрации"""
         from django.db import transaction
-        """Тест что счетчик пользователей не увеличивается после неудачной регистрации"""
+
         # Создаем пользователя
         User.objects.create_user(username='johndoe', password='testpass123')
 
         # Считаем количество до
         initial_count = User.objects.count()
 
-        # Пытаемся создать пользователя с тем же username во вложенной транзакции
+        # Пытаемся создать пользователя с тем же username
         with transaction.atomic():
-            response = self.client.post(self.registration_url, self.valid_user_data)
+            self.client.post(self.registration_url, self.valid_user_data)
             # Транзакция автоматически откатится из-за ошибки
 
         # Проверяем что количество пользователей не изменилось
@@ -186,7 +195,9 @@ class UserUpdateTest(TestCase):
 
         # Проверяем сообщение об успехе
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('Пользователь обновлен' in str(m) for m in messages))
+        self.assertTrue(
+            any('Пользователь успешно изменен' in str(m) for m in messages)
+        )
 
     def test_update_with_new_password(self):
         """Тест обновления пароля пользователя"""
@@ -299,7 +310,7 @@ class UserDeleteTest(TestCase):
         self.assertTrue(User.objects.filter(username='testuser').exists())
 
         # Должен быть редирект или сообщение об ошибке
-        self.assertEqual(response.status_code, 302)  # или 200 в зависимости от реализации
+        self.assertEqual(response.status_code, 302)
 
 
 class UserAuthenticationTest(TestCase):
@@ -348,7 +359,9 @@ class UserAuthenticationTest(TestCase):
 
         # Проверяем сообщение об ошибке
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('Неправильное имя или пароль' in str(m).lower() for m in messages))
+        self.assertTrue(
+            any('Неправильное имя или пароль' in str(m) for m in messages)
+        )
 
     def test_login_with_nonexistent_user(self):
         """Тест входа с несуществующим пользователем"""
