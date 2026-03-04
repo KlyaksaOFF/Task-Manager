@@ -101,7 +101,7 @@ def update_user(request, pk):
                 messages.error(request, "The passwords don't match!")
                 return render(request, 'auth/update_user.html', {'auth': user})
         user.save()
-        messages.success(request, 'Пользователь обновлен')
+        messages.success(request, 'Пользователь успешно изменен')
         request.session.flush()
         return redirect('users')
     return render(request, 'auth/update_user.html', {'auth': user})
@@ -168,7 +168,7 @@ def update_status(request, pk):
         if name:
             status.name = name
             status.save()
-            messages.success(request, 'Статус успешно изменён')
+            messages.success(request, 'Статус успешно изменен')
             return redirect('statuses')
         else:
             messages.error(request, 'Error')
