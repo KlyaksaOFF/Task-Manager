@@ -186,7 +186,7 @@ class UserUpdateTest(TestCase):
 
         # Проверяем сообщение об успехе
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('User updated' in str(m) for m in messages))
+        self.assertTrue(any('Пользователь обновлен' in str(m) for m in messages))
 
     def test_update_with_new_password(self):
         """Тест обновления пароля пользователя"""
@@ -286,7 +286,7 @@ class UserDeleteTest(TestCase):
 
         # Проверяем сообщение
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('remove' in str(m).lower() for m in messages))
+        self.assertTrue(any('удален' in str(m).lower() for m in messages))
 
     def test_cannot_delete_other_user(self):
         """Тест что нельзя удалить другого пользователя"""
@@ -348,7 +348,7 @@ class UserAuthenticationTest(TestCase):
 
         # Проверяем сообщение об ошибке
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('invalid username or password' in str(m).lower() for m in messages))
+        self.assertTrue(any('Неправильное имя или пароль' in str(m).lower() for m in messages))
 
     def test_login_with_nonexistent_user(self):
         """Тест входа с несуществующим пользователем"""

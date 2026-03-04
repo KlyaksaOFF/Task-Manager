@@ -62,7 +62,7 @@ def login_user(request):
             return redirect('index')
 
         else:
-            messages.error(request, 'Invalid username or password')
+            messages.error(request, 'Неправильное имя или пароль')
 
     return render(request, 'auth/login.html')
 
@@ -118,7 +118,7 @@ def delete_user(request, pk):
 
     if request.method == 'POST':
         user.delete()
-        messages.success(request, f'{user.username} remove!')
+        messages.success(request, f'Пользователь успешно удален')
         return redirect('users')
     return render(request, 'auth/confirm_delete.html', {'auth': user})
 
@@ -168,7 +168,7 @@ def update_status(request, pk):
         if name:
             status.name = name
             status.save()
-            messages.success(request, 'Статус обновлен')
+            messages.success(request, 'Статус успешно изменён')
             return redirect('statuses')
         else:
             messages.error(request, 'Error')
@@ -209,7 +209,7 @@ def update_label(request, pk):
         if name:
             label.name = name
             label.save()
-            messages.success(request, 'Имя метки изменено')
+            messages.success(request, 'Метка успешно изменена')
             return redirect('labels')
         else:
             messages.error(request, 'Error')
@@ -255,7 +255,7 @@ def create_task(request):
         if labels_ids:
             labels = Labels.objects.filter(id__in=labels_ids)
             task.labels.set(labels)
-
+        messages.success(request, 'Задача успешно создана')
         return redirect('tasks')
 
     labels = Labels.objects.all()

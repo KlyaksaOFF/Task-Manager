@@ -58,7 +58,7 @@
 
       <h1 class="my-4">
 
-Update user
+Изменить пользователя
 
       </h1>
 
@@ -81,22 +81,22 @@ Update user
     </div>
 
     <div class="mb-3">
-        <label class="form-label" for="id_password1">Password</label>
+        <label class="form-label" for="id_password1">Пароль</label>  <!-- было Password -->
         <input type="password" name="password1" autocomplete="new-password" class="form-control" placeholder="Пароль" aria-describedby="id_password1_helptext" id="id_password1" required>
         <div class="form-text">
             <ul>
-                <li>Your password must contain at least 3 characters.</li>
+                <li>Ваш пароль должен содержать как минимум 3 символа.</li>  <!-- было Your password must contain at least 3 characters -->
             </ul>
         </div>
     </div>
 
     <div class="mb-3">
-        <label class="form-label" for="id_password2">Password confirmation</label>
-        <input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="Password confirmation" aria-describedby="id_password2_helptext" id="id_password2" required>
-        <div class="form-text">To confirm, please enter your password again.</div>
+        <label class="form-label" for="id_password2">Подтверждение пароля</label>  <!-- было Password confirmation -->
+        <input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="Подтверждение пароля" aria-describedby="id_password2_helptext" id="id_password2" required>
+        <div class="form-text">Для подтверждения введите пароль ещё раз.</div>  <!-- было To confirm, please enter your password again -->
     </div>
 
-    <input class="btn btn-primary" type="submit" value="Change">
+    <input class="btn btn-primary" type="submit" value="Изменить">
     <a href="{% url 'users' %}" class="btn btn-secondary">Cancel</a>
 </form>
 
