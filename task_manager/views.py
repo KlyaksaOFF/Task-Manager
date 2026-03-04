@@ -77,6 +77,7 @@ def users(request):
 @require_http_methods(['POST'])
 def logout(request):
     request.session.flush()
+    messages.success(request, 'Вы разлогинены')
     return redirect('index')
 
 
@@ -137,7 +138,7 @@ def delete_status(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == 'POST':
         status.delete()
-        messages.success(request, f'Статус удалён')
+        messages.success(request, f'Статус удален')
         return redirect('statuses')
     return render(request, 'status/delete_status.html', {'status': status})
 
@@ -167,7 +168,7 @@ def update_status(request, pk):
         if name:
             status.name = name
             status.save()
-            messages.success(request, 'Статус обновлён')
+            messages.success(request, 'Статус обновлен')
             return redirect('statuses')
         else:
             messages.error(request, 'Error')
