@@ -293,7 +293,7 @@ def tasks_list(request):
 def delete_task(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.user != task.author:
-        messages.error(request, "You don't have permission")
+        messages.error(request, "Задачу может удалить только ее автор")
         return redirect('tasks')
     if request.method == 'POST':
         messages.success(request, 'Невозможно удалить задачу')
@@ -308,7 +308,7 @@ def delete_task(request, pk):
 def task_update(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.user != task.author:
-        messages.error(request, "You don't have permission")
+        messages.error(request, "Задачу может обновить только ее автор")
         return redirect('tasks')
     if request.method == 'POST':
         task.name = request.POST.get('name')
