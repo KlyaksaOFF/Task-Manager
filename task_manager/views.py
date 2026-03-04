@@ -227,7 +227,7 @@ def update_label(request, pk):
 def delete_label(request, pk):
     label = get_object_or_404(Labels, pk=pk)
     if label.tasks_set.exists():
-        messages.error(request, 'Нельзя удалить метку, связанную с задачей')
+        messages.error(request, 'Невозможно удалить метку')
         return render(request, 'label/delete_label.html', {'label': label})
     if request.method == 'POST':
         label.delete()
@@ -296,7 +296,7 @@ def delete_task(request, pk):
         messages.error(request, "You don't have permission")
         return redirect('tasks')
     if request.method == 'POST':
-        messages.success(request, 'Задача успешно удалена')
+        messages.success(request, 'Невозможно удалить задачу')
         task.delete()
         return redirect('tasks')
     return render(request, 'task/delete_task.html', {'task': task})
