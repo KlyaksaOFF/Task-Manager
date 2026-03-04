@@ -296,7 +296,7 @@ def delete_task(request, pk):
         messages.error(request, "Задачу может удалить только ее автор")
         return redirect('tasks')
     if request.method == 'POST':
-        messages.success(request, 'Невозможно удалить задачу')
+        messages.success(request, 'Задача успешно удалена')
         task.delete()
         return redirect('tasks')
     return render(request, 'task/delete_task.html', {'task': task})
