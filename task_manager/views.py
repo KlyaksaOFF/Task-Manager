@@ -100,7 +100,7 @@ def update_user(request, pk):
                 messages.error(request, "The passwords don't match!")
                 return render(request, 'auth/update_user.html', {'auth': user})
         user.save()
-        messages.success(request, 'User updated!')
+        messages.success(request, 'Пользователь обновлен')
         request.session.flush()
         return redirect('users')
     return render(request, 'auth/update_user.html', {'auth': user})
@@ -137,7 +137,7 @@ def delete_status(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == 'POST':
         status.delete()
-        messages.success(request, f'{status.name} remove!')
+        messages.success(request, f'Статус удалён')
         return redirect('statuses')
     return render(request, 'status/delete_status.html', {'status': status})
 
@@ -150,7 +150,7 @@ def status_create(request):
         name = request.POST.get('name')
         if name:
             Status.objects.create(name=name)
-            messages.success(request, f'status {name} create!')
+            messages.success(request, f'Статус успешно создан')
             return redirect('statuses')
         else:
             messages.error(request, "Error")
@@ -167,7 +167,7 @@ def update_status(request, pk):
         if name:
             status.name = name
             status.save()
-            messages.success(request, 'status name updated!')
+            messages.success(request, 'Статус обновлён')
             return redirect('statuses')
         else:
             messages.error(request, 'Error')
@@ -191,7 +191,7 @@ def create_label(request):
         name = request.POST.get('name')
         if name:
             Labels.objects.create(name=name)
-            messages.success(request, f'label {name} create!')
+            messages.success(request, f'Метка успешно создана')
             return redirect('labels')
         else:
             messages.error(request, "Error")
@@ -208,7 +208,7 @@ def update_label(request, pk):
         if name:
             label.name = name
             label.save()
-            messages.success(request, 'Label name updated!')
+            messages.success(request, 'Имя метки изменено')
             return redirect('labels')
         else:
             messages.error(request, 'Error')
@@ -291,7 +291,7 @@ def delete_task(request, pk):
         messages.error(request, "You don't have permission")
         return redirect('tasks')
     if request.method == 'POST':
-        messages.success(request, f'{task.name} remove!')
+        messages.success(request, f'Задача успешно удалена')
         task.delete()
         return redirect('tasks')
     return render(request, 'task/delete_task.html', {'task': task})
