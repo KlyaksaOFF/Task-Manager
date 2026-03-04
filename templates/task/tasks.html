@@ -135,8 +135,8 @@
                             <td>
                                 {% if user.is_authenticated %}
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-light">Update</a>
-                                        <a href="{% url 'task_delete' task.id %}" class="btn btn-outline-danger">Delete</a>
+                                        <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-light">Изменить</a>
+                                        <a href="{% url 'task_delete' task.id %}" class="btn btn-outline-danger">Удалить</a>
                                     </div>
                                 {% endif %}
                             </td>

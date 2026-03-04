@@ -81,8 +81,8 @@ Users
       <td>{{ user.first_name }} {{ user.last_name }}</td>
       <td>{{ user.date_joined }}</td>
       <td>
-          <a href="{% url 'delete' user.pk %}" class="btn btn-danger btn-sm">Delete</a>
-          <a href="{% url 'update' user.pk %}" class="btn btn-info btn-sm">Edit</a>
+          <a href="{% url 'delete' user.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+          <a href="{% url 'update' user.pk %}" class="btn btn-info btn-sm">Изменить</a>
       </td>
   </tr>
     {% endfor %}

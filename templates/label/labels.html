@@ -81,8 +81,8 @@ Labels
         <td>{{ label.name }}</td>
         <td>{{ label.date }}</td>
         <td>
-            <a href="{% url 'label_delete' label.pk %}" class="btn btn-danger btn-sm">Delete</a>
-            <a href="{% url 'label_update' label.pk %}" class="btn btn-info btn-sm">Edit</a>
+            <a href="{% url 'label_delete' label.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+            <a href="{% url 'label_update' label.pk %}" class="btn btn-info btn-sm">Изменить</a>
         </td>
       </tr>
     {% endfor %}
