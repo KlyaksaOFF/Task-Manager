@@ -14,7 +14,7 @@
       <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/users/">Пользователи</a>
+            <a class="nav-link" href="/users/">Users</a>
           </li>
 
         </ul>
@@ -44,6 +44,7 @@
             {% endif %}
         </ul>
       </div>
+    </nav>
     <div class="container wrapper flex-grow-1">
     {% if messages %}
         {% for message in messages %}
@@ -58,11 +59,11 @@
 
       <h1 class="my-4">
 
-Статусы
+Statuses
 
       </h1>
 
-<a class="btn btn-primary mb-3" href="/statuses/create/">Создать статус</a>
+<a class="btn btn-primary mb-3" href="/statuses/create/">Create status</a>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -80,14 +81,14 @@
         <td>{{ status.name }}</td>
         <td>{{ status.date }}</td>
         <td>
-            <a href="{% url 'status_delete' status.pk %}" class="btn btn-danger btn-sm">Удалить</a>
-            <a href="{% url 'status_update' status.pk %}" class="btn btn-info btn-sm">Изменить</a>
+            <a href="{% url 'status_delete' status.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            <a href="{% url 'status_update' status.pk %}" class="btn btn-info btn-sm">Edit</a>
         </td>
       </tr>
     {% endfor %}
   {% else %}
   <tr>
-      <td colspan="5" class="text-center">Статусов нет</td>
+      <td colspan="5" class="text-center">There are no statuses</td>
   </tr>
   {% endif %}
   </tbody>
@@ -101,5 +102,4 @@
     </footer>
 
 
-    </body>
-</html>
+</body></html>
