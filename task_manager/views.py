@@ -118,7 +118,7 @@ def delete_user(request, pk):
 
     if request.method == 'POST':
         user.delete()
-        messages.success(request, f'Пользователь успешно удален')
+        messages.success(request, 'Пользователь успешно удален')
         return redirect('users')
     return render(request, 'auth/confirm_delete.html', {'auth': user})
 
@@ -156,7 +156,7 @@ def status_create(request):
         name = request.POST.get('name')
         if name:
             Status.objects.create(name=name)
-            messages.success(request, f'Статус успешно создан')
+            messages.success(request, 'Статус успешно создан')
             return redirect('statuses')
         else:
             messages.error(request, "Error")
@@ -197,7 +197,7 @@ def create_label(request):
         name = request.POST.get('name')
         if name:
             Labels.objects.create(name=name)
-            messages.success(request, f'Метка успешно создана')
+            messages.success(request, 'Метка успешно создана')
             return redirect('labels')
         else:
             messages.error(request, "Error")
@@ -231,7 +231,7 @@ def delete_label(request, pk):
         return render(request, 'label/delete_label.html', {'label': label})
     if request.method == 'POST':
         label.delete()
-        messages.success(request, 'Метка успешно удалена')  # Уберите лишние пробелы
+        messages.success(request, 'Метка успешно удалена')
         return redirect('labels')
     return render(request, 'label/delete_label.html', {'label': label})
 
@@ -296,7 +296,7 @@ def delete_task(request, pk):
         messages.error(request, "You don't have permission")
         return redirect('tasks')
     if request.method == 'POST':
-        messages.success(request, f'Задача успешно удалена')
+        messages.success(request, 'Задача успешно удалена')
         task.delete()
         return redirect('tasks')
     return render(request, 'task/delete_task.html', {'task': task})
