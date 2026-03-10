@@ -194,14 +194,15 @@ def label(request):
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def create_label(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        if name:
-            Labels.objects.create(name=name)
-            messages.success(request, 'Метка успешно создана')
-            return redirect('labels')
-        else:
-            messages.error(request, "Error")
+    try:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            if name:
+                Labels.objects.create(name=name)
+                messages.success(request, 'Метка успешно создана')
+                return redirect('labels')
+    except:
+        messages.error(request, "уже существует")
     return render(request, 'label/create_label.html')
 
 
@@ -242,27 +243,29 @@ def delete_label(request, pk):
 @login_required
 @require_http_methods(['GET', 'POST'])
 def create_task(request):
-    if request.method == 'POST':
-        status = Status.objects.get(id=request.POST.get('status'))
+    try:
+        if request.method == 'POST':
+            status = Status.objects.get(id=request.POST.get('status'))
 
-        executor = User.objects.get(id=request.POST.get('executor')) if (
-            request.POST.get('executor')) else None
+            executor = User.objects.get(id=request.POST.get('executor')) if (
+                request.POST.get('executor')) else None
 
-        task = Tasks.objects.create(
-            name=request.POST.get('name'),
-            description=request.POST.get('description'),
-            status=status,
-            author=request.user,
-            executor=executor
-        )
+            task = Tasks.objects.create(
+                name=request.POST.get('name'),
+                description=request.POST.get('description'),
+                status=status,
+                author=request.user,
+                executor=executor
+            )
 
-        labels_ids = request.POST.getlist('labels')
-        if labels_ids:
-            labels = Labels.objects.filter(id__in=labels_ids)
-            task.labels.set(labels)
-        messages.success(request, 'Задача успешно создана')
-        return redirect('tasks')
-
+            labels_ids = request.POST.getlist('labels')
+            if labels_ids:
+                labels = Labels.objects.filter(id__in=labels_ids)
+                task.labels.set(labels)
+            messages.success(request, 'Задача успешно создана')
+            return redirect('tasks')
+    except:
+        messages.error(request, "уже существует")
     labels = Labels.objects.all()
     statuses = Status.objects.all()
     users = User.objects.all()
