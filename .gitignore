@@ -102,3 +102,4 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 *.bak
+*.db.sqlite3
