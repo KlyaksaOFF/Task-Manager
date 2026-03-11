@@ -13,8 +13,6 @@ render-start:
 django-tests:
 	uv run manage.py test
 
-test:
-	uv run pytest
-
 test-coverage:
-	uv run pytest --cov=gendiff --cov-report=xml:coverage.xml
+	uv run coverage run --source=task_manager manage.py test
+	uv run coverage xml

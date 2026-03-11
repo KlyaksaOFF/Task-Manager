@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests
         run: |
-          make django-tests         
+          make test-coverage        
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
