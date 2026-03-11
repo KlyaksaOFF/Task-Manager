@@ -43,4 +43,4 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.python.version=3
             -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.exclusions=staticfiles/**,static/**
+            -Dsonar.exclusions=staticfiles/**,static/**,task_manager/tests/**
