@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from task_manager.models import Labels, Status, Tasks
+from labels.models import Labels
+from statuses.models import Status
+from tasks.models import Tasks
 
 
 class TasksFilterTest(TestCase):

@@ -14,5 +14,5 @@ django-tests:
 	uv run manage.py test
 
 test-coverage:
-	uv run coverage run --source=task_manager manage.py test
+	uv run coverage run --source=task_manager,users,statuses,labels,tasks manage.py test
 	uv run coverage xml
