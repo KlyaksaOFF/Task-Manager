@@ -103,3 +103,4 @@ ehthumbs.db
 Thumbs.db
 *.bak
 *.db.sqlite3
+task_manager/migrations/__pycache__
