@@ -78,7 +78,7 @@ MANIFEST
 env/
 venv/
 ENV/
-
+task_manager/.env
 # mypy
 .mypy_cache/
 .dmypy.json
