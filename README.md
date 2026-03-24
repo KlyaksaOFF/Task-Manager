@@ -1,5 +1,4 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/KlyaksaOFF/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/KlyaksaOFF/python-project-52/actions)
+###Linter status:
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KlyaksaOFF_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KlyaksaOFF_python-project-52)
 # Python Project "Task Manager"
 
