@@ -1,7 +1,7 @@
 [project]
-name = "hexlet-code"
+name = "task-manager"
 version = "0.1.0"
-description = "Add your description here"
+description = "Django-based web application for task management with authentication, role-based access control and PostgreSQL support"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
