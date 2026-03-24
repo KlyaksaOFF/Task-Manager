@@ -1,4 +1,4 @@
-###Linter status:
+### Linter status:
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KlyaksaOFF_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KlyaksaOFF_python-project-52)
 # Python Project "Task Manager"
 
