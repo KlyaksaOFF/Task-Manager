@@ -1,0 +1,11 @@
+services:
+
+  appwork:
+    build: .
+    image: task-manager:latest
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      PYTHONPATH: .
+
