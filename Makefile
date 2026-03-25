@@ -19,6 +19,5 @@ django-tests:
 test-coverage:
 	uv run coverage run --source=task_manager,users,statuses,labels,tasks manage.py test
 	uv run coverage xml
-
-build:
+docker-build:
 	docker compose up --build -d
